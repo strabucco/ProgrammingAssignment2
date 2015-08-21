@@ -27,15 +27,16 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         ##this pulls the inv from makeCacheMatrix
-        inv<- x$getinv
-        data<- x$get
-        if ((!is.null(inv)) & (x==data)) {
+        inv<- makeCacheMatrix()$getinv()
+        data<- makeCacheMatrix()$get()
+        if ((!is.null(inv)) & (x!=NA)) {
                 message ("getting cached inverse")
                 return(inv)                        
         }
         ## above checks if the inverse is cached. if it is AND the matrix used
         ## is the same, it returns the inverse from cached
-        data<-x$set
+        data<-makeCacheMatrix()$get()
+        return(data)
         inv<-solve(data, ...)
         x$setinv(inv)
         inv
